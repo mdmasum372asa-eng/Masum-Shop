@@ -1,0 +1,6 @@
+{
+  "name": "MASUM SHOP",
+  "description": "Premium modern Bangladeshi e-commerce platform with real-time sync, product management, and delivery checkout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

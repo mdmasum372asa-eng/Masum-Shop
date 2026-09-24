@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "MASUM SHOP product entity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 200 },
+        "image": { "type": "string", "maxLength": 2048 },
+        "galleryImages": { "type": "array" },
+        "category": { "type": "string", "maxLength": 100 },
+        "regularPrice": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "description": { "type": "string", "maxLength": 5000 },
+        "stockQuantity": { "type": "number" },
+        "stockStatus": { "type": "string", "enum": ["in_stock", "out_of_stock"] },
+        "isPublished": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "regularPrice", "stockQuantity", "stockStatus", "isPublished", "category"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "slug": { "type": "string", "maxLength": 100 },
+        "icon": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "slug"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order with prepaid delivery verification details",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string", "maxLength": 64 },
+        "customerName": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "address": { "type": "string", "maxLength": 500 },
+        "deliveryLocation": { "type": "string", "enum": ["inside_cox", "outside_cox"] },
+        "products": { "type": "array" },
+        "quantity": { "type": "number" },
+        "productTotal": { "type": "number" },
+        "deliveryCharge": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["bkash", "nagad"] },
+        "transactionId": { "type": "string", "maxLength": 64 },
+        "deliveryPaymentStatus": { "type": "string", "enum": ["paid_pending_verification", "verified", "rejected"] },
+        "orderStatus": { "type": "string", "enum": ["Pending", "Confirmed", "Processing", "Shipped", "Delivered", "Cancelled"] },
+        "orderDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "customerName", "phone", "address", "deliveryLocation", "products", "productTotal", "deliveryCharge", "grandTotal", "paymentMethod", "transactionId", "orderStatus"]
+    },
+    "Banner": {
+      "title": "Banner",
+      "description": "Homepage advertisement and promotional banners",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "image": { "type": "string", "maxLength": 2048 },
+        "link": { "type": "string", "maxLength": 500 },
+        "isEnabled": { "type": "boolean" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "image", "isEnabled"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global website and payment configuration",
+      "type": "object",
+      "properties": {
+        "websiteName": { "type": "string", "maxLength": 100 },
+        "logo": { "type": "string", "maxLength": 2048 },
+        "favicon": { "type": "string", "maxLength": 2048 },
+        "contactNumber": { "type": "string", "maxLength": 30 },
+        "facebookUrl": { "type": "string", "maxLength": 500 },
+        "tiktokUrl": { "type": "string", "maxLength": 500 },
+        "defaultInsideDeliveryCharge": { "type": "number" },
+        "defaultOutsideDeliveryCharge": { "type": "number" },
+        "bkashNumber": { "type": "string", "maxLength": 30 },
+        "nagadNumber": { "type": "string", "maxLength": 30 },
+        "paymentInstructions": { "type": "string", "maxLength": 2000 },
+        "homepageBanner": { "type": "string", "maxLength": 2048 },
+        "footerText": { "type": "string", "maxLength": 500 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalog of products available in MASUM SHOP"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders with prepayment transaction information"
+    },
+    "/banners/{bannerId}": {
+      "schema": "Banner",
+      "description": "Promotional and advertisement banners"
+    },
+    "/settings/{settingId}": {
+      "schema": "Settings",
+      "description": "Website and payment settings"
+    },
+    "/admins/{adminId}": {
+      "schema": "Settings",
+      "description": "Admin authorization mapping"
+    }
+  }
+}
